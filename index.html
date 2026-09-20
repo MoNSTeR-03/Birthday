@@ -1,1 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0f0824; --plum:#2a1258; --rose:#ff6f91; --berry:#c2185b;
+    --gold:#ffcf6b; --cream:#fff1e6; --blush:#ffd7e2;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-tap-highlight-color:transparent}
+  body{
+    margin:0; min-height:100svh; color:var(--cream);
+    font-family:'Cormorant Garamond',Georgia,serif; font-weight:500;
+    background:radial-gradient(120% 80% at 50% 25%, #3d1d7d 0%, #1e1045 48%, var(--night) 100%) fixed;
+    overflow-x:hidden;
+  }
 
+  /* ---------- starry sky ---------- */
+  #stars{position:fixed; inset:0; pointer-events:none; z-index:0}
+  #stars i{position:absolute; border-radius:50%; background:#fff; opacity:.2; animation:twinkle 3s ease-in-out infinite alternate}
+  @keyframes twinkle{to{opacity:.9}}
+
+  /* ---------- layout ---------- */
+  .stage{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; max-width:640px; margin:0 auto; padding:0 16px 40px}
+  .bunting{width:min(100%,520px); height:auto; display:block}
+  h1{margin:.2rem 0 .8rem; font-family:'Great Vibes','Brush Script MT',cursive; font-weight:400; text-align:center; line-height:1; color:var(--cream); text-shadow:0 0 26px rgba(255,111,145,.65)}
+  h1 .hb{display:block; font-size:clamp(2.7rem,11vw,4.2rem)}
+  h1 .nm{display:block; font-size:clamp(4.2rem,20vw,7.2rem); text-shadow:0 0 30px rgba(255,207,107,.7), 0 0 60px rgba(255,111,145,.5)}
+
+  .row{display:flex; justify-content:space-around; width:100%; gap:8px; padding:8px 0}
+
+  /* ---------- hidden-message items ---------- */
+  .item{
+    position:relative; width:80px; height:80px; border-radius:50%;
+    border:2px solid rgba(255,207,107,.75);
+    background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.3), rgba(255,255,255,.05) 62%);
+    box-shadow:0 0 24px rgba(255,111,145,.5);
+    display:grid; place-items:center; font-size:2.5rem; line-height:1;
+    color:inherit; cursor:pointer; padding:0;
+    animation:bob 3.6s ease-in-out infinite; animation-delay:var(--d);
+  }
+  .item span{pointer-events:none}
+  @keyframes bob{50%{transform:translateY(-9px)}}
+  .item::after{
+    content:""; position:absolute; inset:-6px; border-radius:50%;
+    border:2px solid var(--gold); opacity:0;
+    animation:ping 2.4s ease-out infinite; animation-delay:var(--d);
+  }
+  @keyframes ping{0%{transform:scale(.9); opacity:.7} 100%{transform:scale(1.4); opacity:0}}
+  .item:hover{filter:brightness(1.2)}
+  .item:focus-visible, .cake:focus-visible, .btn:focus-visible, .link-btn:focus-visible, .mute:focus-visible{outline:3px solid #fff; outline-offset:4px}
+  .item.done{opacity:.55; animation:none; box-shadow:none; border-color:rgba(255,255,255,.3)}
+  .item.done::after{display:none}
+  .item.done::before{
+    content:"♥"; position:absolute; top:-4px; right:-4px; z-index:1;
+    width:26px; height:26px; border-radius:50%; background:var(--rose); color:#fff;
+    display:grid; place-items:center; font:.85rem system-ui,sans-serif;
+  }
+
+  /* ---------- the cake ---------- */
+  .cake{
+    display:block; width:min(92vw,460px); margin:4px auto; padding:0; border:0; background:none; cursor:pointer;
+    filter:drop-shadow(0 0 30px rgba(255,207,107,.35));
+    transition:transform .2s ease;
+  }
+  .cake:active{transform:scale(.97)}
+  .cake svg{display:block; width:100%; height:auto; overflow:visible}
+  .cake-script{font-family:'Great Vibes','Brush Script MT',cursive}
+  .flame{transform-box:fill-box; transform-origin:50% 100%; animation:flick .9s ease-in-out infinite alternate; animation-delay:var(--d); transition:opacity .5s}
+  .glow{animation:glowPulse 1.4s ease-in-out infinite alternate; animation-delay:var(--d); transition:opacity .5s}
+  @keyframes flick{0%{transform:scale(1,1) rotate(-2deg)} 100%{transform:scale(.88,1.12) rotate(2.5deg)}}
+  @keyframes glowPulse{0%{opacity:.55} 100%{opacity:.95}}
+  .cake svg.out .flame, .cake svg.out .glow{opacity:0; animation:none}
+
+  /* ---------- hint + progress ---------- */
+  .hint{min-height:1.7em; margin:16px 0 6px; font-size:1.4rem; font-style:italic; text-align:center; color:var(--blush)}
+  .hearts{display:flex; gap:10px; justify-content:center; font:1.35rem system-ui,sans-serif}
+  .hearts span{color:rgba(255,255,255,.22); transition:color .4s, transform .4s}
+  .hearts span.on{color:var(--rose); transform:scale(1.25)}
+  .link-btn{margin-top:14px; font:inherit; font-size:1.25rem; font-style:italic; color:var(--gold); background:none; border:0; border-bottom:1px solid rgba(255,207,107,.6); cursor:pointer; padding:0 2px}
+
+  /* ---------- intro screen ---------- */
+  .intro{
+    position:fixed; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:24px; text-align:center;
+    background:radial-gradient(120% 80% at 50% 30%, #3d1d7d 0%, #1e1045 50%, var(--night) 100%);
+    transition:opacity .8s ease;
+  }
+  .intro[hidden]{display:none}
+  .intro.gone{opacity:0; pointer-events:none}
+  .intro h2{margin:0; font-family:'Great Vibes','Brush Script MT',cursive; font-weight:400; font-size:clamp(3rem,13vw,5rem); text-shadow:0 0 26px rgba(255,111,145,.65)}
+  .intro p{margin:0; font-size:1.5rem; font-style:italic; color:var(--blush); max-width:20em}
+  .intro small{font-size:1.1rem; color:rgba(255,241,230,.65)}
+  .intro .big-heart{font:4rem system-ui,sans-serif; color:var(--rose); animation:beat 1.3s ease-in-out infinite}
+  @keyframes beat{0%,100%{transform:scale(1)} 15%{transform:scale(1.18)} 30%{transform:scale(1)} 45%{transform:scale(1.12)}}
+
+  .btn{
+    font:inherit; font-weight:600; font-size:1.3rem; padding:.7rem 2.1rem; border:0; border-radius:999px;
+    background:var(--berry); color:#fff; cursor:pointer; box-shadow:0 8px 22px rgba(194,24,91,.45);
+  }
+  .btn:hover{filter:brightness(1.1)}
+
+  .mute{
+    position:fixed; top:12px; right:12px; z-index:60; width:42px; height:42px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.3); background:rgba(15,8,36,.6); color:#fff; font-size:1.15rem; cursor:pointer;
+  }
+
+  #confetti{position:fixed; inset:0; z-index:50; pointer-events:none}
+
+  /* ---------- dialogs ---------- */
+  dialog{border:0; padding:0; background:none; color:inherit; max-width:none}
+  dialog::backdrop{background:rgba(10,4,25,.78); backdrop-filter:blur(4px)}
+  #msg{width:min(88vw,430px)}
+  #msg[open]{animation:pop .32s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes pop{from{transform:scale(.82); opacity:0}}
+  #msg .inner{
+    padding:2rem 1.6rem 1.7rem; text-align:center; border-radius:28px;
+    background:linear-gradient(160deg,var(--cream),var(--blush)); color:#4a1230;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+  }
+  .m-icon{font-size:3.8rem; line-height:1}
+  .m-title{margin:.4rem 0 .6rem; font-family:'Great Vibes','Brush Script MT',cursive; font-weight:400; font-size:2.7rem; color:var(--berry); line-height:1.1}
+  .m-text{margin:0 0 1.4rem; font-size:1.4rem; line-height:1.55; font-weight:600}
+  form{margin:0}
+
+  #poem{width:min(92vw,540px); max-height:90svh; overflow:auto; border-radius:28px; border:1px solid rgba(255,207,107,.55); background:linear-gradient(170deg,#2f1563,#170a38); box-shadow:0 0 80px rgba(255,111,145,.35)}
+  #poem .inner{padding:2rem 1.4rem 1.8rem; text-align:center}
+  #poem h2{margin:0 0 1.2rem; font-family:'Great Vibes','Brush Script MT',cursive; font-weight:400; font-size:clamp(2.8rem,12vw,3.8rem); color:var(--gold); line-height:1.1}
+  .stanza{margin:0 0 1.5rem}
+  .line{display:block; font-size:1.3rem; line-height:1.65; font-style:italic; opacity:0; animation:fadeUp .9s ease forwards; animation-delay:var(--d)}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+  .sign{margin:1.6rem 0 1.4rem; font-family:'Great Vibes','Brush Script MT',cursive; font-size:2.3rem; line-height:1.25; color:var(--blush); opacity:0; animation:fadeUp 1.2s ease forwards; animation-delay:var(--d)}
+  #poem .btn{opacity:0; animation:fadeUp 1s ease forwards; animation-delay:var(--d)}
+
+  @media (max-width:380px){ .item{width:70px; height:70px; font-size:2.2rem} }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important; transition:none !important}
+    .line,.sign,#poem .btn{opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<div id="stars" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<button class="mute" id="mute" aria-label="Turn sound off" title="Sound">🔊</button>
+
+<!-- Intro -->
+<section class="intro" id="intro">
+  <div class="big-heart" aria-hidden="true">♥</div>
+  <h2 id="introHey">Hey…</h2>
+  <p>I made something special for you.</p>
+  <button class="btn" id="openBtn">Open your surprise</button>
+  <small>Turn your sound on 🔊</small>
+</section>
+
+<main class="stage" id="stage" inert>
+  <svg class="bunting" viewBox="0 0 400 70" aria-hidden="true">
+    <path d="M0 8 Q200 62 400 8" fill="none" stroke="#ffd7e2" stroke-width="2"/>
+    <polygon points="26,17.7 54,17.7 40,47.7"  fill="#ff6f91"/>
+    <polygon points="66,25.3 94,25.3 80,55.3"  fill="#ffcf6b"/>
+    <polygon points="106,30.7 134,30.7 120,60.7" fill="#b794f6"/>
+    <polygon points="146,33.9 174,33.9 160,63.9" fill="#fff1e6"/>
+    <polygon points="186,35 214,35 200,65"     fill="#ff6f91"/>
+    <polygon points="226,33.9 254,33.9 240,63.9" fill="#ffcf6b"/>
+    <polygon points="266,30.7 294,30.7 280,60.7" fill="#b794f6"/>
+    <polygon points="306,25.3 334,25.3 320,55.3" fill="#fff1e6"/>
+    <polygon points="346,17.7 374,17.7 360,47.7" fill="#ff6f91"/>
+  </svg>
+
+  <h1><span class="hb">Happy Birthday</span><span class="nm" id="name">Ryoko</span></h1>
+
+  <div class="row" id="rowTop"></div>
+
+  <button class="cake" id="cake" aria-label="Tap the cake to blow out the candles">
+    <svg id="cakeSvg" viewBox="0 0 400 440" aria-hidden="true">
+      <defs>
+        <radialGradient id="glowG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>
+        <linearGradient id="flameG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff8a00"/><stop offset=".6" stop-color="#ffd23f"/><stop offset="1" stop-color="#fff6c9"/></linearGradient>
+      </defs>
+
+      <!-- plate -->
+      <ellipse cx="200" cy="410" rx="190" ry="22" fill="#000" opacity=".28"/>
+      <ellipse cx="200" cy="401" rx="186" ry="21" fill="#f6e7f0"/>
+      <ellipse cx="200" cy="397" rx="162" ry="14" fill="#ffffff"/>
+
+      <!-- tier bodies -->
+      <rect x="42"  y="300" width="316" height="96" rx="18" fill="#ffe3ec"/>
+      <rect x="84"  y="212" width="232" height="92" rx="16" fill="#fff3e8"/>
+      <rect x="124" y="138" width="152" height="76" rx="14" fill="#ffd7e2"/>
+
+      <!-- bottom tier frosting -->
+      <rect x="42" y="300" width="316" height="26" rx="13" fill="#ff7fa6"/>
+      <g fill="#ff7fa6">
+        <circle cx="64" cy="326" r="13"/><circle cx="100" cy="326" r="13"/><circle cx="136" cy="326" r="13"/><circle cx="172" cy="326" r="13"/>
+        <circle cx="208" cy="326" r="13"/><circle cx="244" cy="326" r="13"/><circle cx="280" cy="326" r="13"/><circle cx="316" cy="326" r="13"/><circle cx="344" cy="324" r="11"/>
+      </g>
+      <text x="200" y="376" text-anchor="middle" class="cake-script" font-size="38" fill="#c2185b">Happy Birthday</text>
+      <line x1="58" y1="389" x2="342" y2="389" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 22"/>
+
+      <!-- middle tier frosting -->
+      <rect x="84" y="212" width="232" height="24" rx="12" fill="#ff6f91"/>
+      <g fill="#ff6f91">
+        <circle cx="106" cy="236" r="11"/><circle cx="138" cy="236" r="11"/><circle cx="170" cy="236" r="11"/><circle cx="202" cy="236" r="11"/>
+        <circle cx="234" cy="236" r="11"/><circle cx="266" cy="236" r="11"/><circle cx="298" cy="236" r="11"/>
+      </g>
+      <text id="cakeName" x="200" y="288" text-anchor="middle" class="cake-script" font-size="40" fill="#c2185b">Ryoko</text>
+
+      <!-- top tier frosting + heart -->
+      <rect x="124" y="138" width="152" height="22" rx="11" fill="#d81b60"/>
+      <g fill="#d81b60">
+        <circle cx="144" cy="160" r="10"/><circle cx="166" cy="160" r="10"/><circle cx="188" cy="160" r="10"/>
+        <circle cx="210" cy="160" r="10"/><circle cx="232" cy="160" r="10"/><circle cx="254" cy="160" r="10"/>
+      </g>
+      <path d="M200 204 C180 190 176 174 188 170 C194 168 198 172 200 176 C202 172 206 168 212 170 C224 174 220 190 200 204Z" fill="#fff"/>
+
+      <!-- strawberries -->
+      <g>
+        <circle cx="70" cy="296" r="10" fill="#e53935"/><path d="M64 288 l6 -5 l6 5" stroke="#43a047" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="330" cy="296" r="10" fill="#e53935"/><path d="M324 288 l6 -5 l6 5" stroke="#43a047" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="110" cy="208" r="9" fill="#e53935"/><path d="M104 201 l6 -5 l6 5" stroke="#43a047" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="290" cy="208" r="9" fill="#e53935"/><path d="M284 201 l6 -5 l6 5" stroke="#43a047" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- candles -->
+      <g>
+        <rect x="141" y="98" width="10" height="44" rx="3" fill="#ffe082"/>
+        <rect x="168" y="98" width="10" height="44" rx="3" fill="#ffffff"/>
+        <rect x="195" y="98" width="10" height="44" rx="3" fill="#ff8fab"/>
+        <rect x="222" y="98" width="10" height="44" rx="3" fill="#ffffff"/>
+        <rect x="249" y="98" width="10" height="44" rx="3" fill="#ffe082"/>
+        <g stroke="#3b2a2a" stroke-width="2" stroke-linecap="round">
+          <line x1="146" y1="98" x2="146" y2="91"/><line x1="173" y1="98" x2="173" y2="91"/><line x1="200" y1="98" x2="200" y2="91"/>
+          <line x1="227" y1="98" x2="227" y2="91"/><line x1="254" y1="98" x2="254" y2="91"/>
+        </g>
+      </g>
+
+      <!-- flames -->
+      <g>
+        <circle class="glow" style="--d:.0s" cx="146" cy="78" r="22" fill="url(#glowG)"/>
+        <circle class="glow" style="--d:.3s" cx="173" cy="78" r="22" fill="url(#glowG)"/>
+        <circle class="glow" style="--d:.6s" cx="200" cy="78" r="22" fill="url(#glowG)"/>
+        <circle class="glow" style="--d:.2s" cx="227" cy="78" r="22" fill="url(#glowG)"/>
+        <circle class="glow" style="--d:.5s" cx="254" cy="78" r="22" fill="url(#glowG)"/>
+        <path class="flame" style="--d:.0s" d="M146 62 C155 74 154 88 146 90 C138 88 137 74 146 62Z" fill="url(#flameG)"/>
+        <path class="flame" style="--d:.3s" d="M173 62 C182 74 181 88 173 90 C165 88 164 74 173 62Z" fill="url(#flameG)"/>
+        <path class="flame" style="--d:.6s" d="M200 62 C209 74 208 88 200 90 C192 88 191 74 200 62Z" fill="url(#flameG)"/>
+        <path class="flame" style="--d:.2s" d="M227 62 C236 74 235 88 227 90 C219 88 218 74 227 62Z" fill="url(#flameG)"/>
+        <path class="flame" style="--d:.5s" d="M254 62 C263 74 262 88 254 90 C246 88 245 74 254 62Z" fill="url(#flameG)"/>
+      </g>
+    </svg>
+  </button>
+
+  <div class="row" id="rowBottom"></div>
+
+  <p class="hint" id="hint" aria-live="polite"></p>
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+  <button class="link-btn" id="poemBtn" hidden>Read your poem again</button>
+</main>
+
+<!-- One surprise message -->
+<dialog id="msg" aria-labelledby="mTitle">
+  <div class="inner">
+    <div class="m-icon" id="mIcon" aria-hidden="true"></div>
+    <h2 class="m-title" id="mTitle"></h2>
+    <p class="m-text" id="mText"></p>
+    <form method="dialog"><button class="btn">Close</button></form>
+  </div>
+</dialog>
+
+<!-- The poem -->
+<dialog id="poem" aria-labelledby="poemTitle">
+  <div class="inner">
+    <h2 id="poemTitle"></h2>
+    <div id="poemBody"></div>
+    <p class="sign" id="sign"></p>
+    <form method="dialog"><button class="btn" id="poemClose">Back to the cake</button></form>
+  </div>
+</dialog>
+
+<script>
+/* =====================================================
+   EDIT THIS PART: names, messages and the poem
+   ===================================================== */
+const HER_NAME  = "Ryoko";
+const FROM_NAME = "MoNSTeR";
+
+const SURPRISES = [
+  { icon:"🎈", title:"Happy Birthday, my love!",
+    text:`Today the whole world celebrates the day you were born, and I get to celebrate that you're mine. You make every single day brighter, and today you're the brightest thing in the sky.` },
+  { icon:"🎁", title:"The Best Gift",
+    text:`They say the best gifts come when you least expect them. Then you walked into my life, and I've been unwrapping new reasons to adore you ever since.` },
+  { icon:"💌", title:"Little Things",
+    text:`I love the way you laugh, the way you look at me when you think I'm not watching, and the way ordinary days turn into my favorite memories when you're in them.` },
+  { icon:"🌹", title:"Gorgeous",
+    text:`You're beautiful, ${HER_NAME}. Not only the way you look, but the way you love, the way you care, and the way you light up a room without even trying. I'm still a little dazzled every time I see you.` },
+  { icon:"🔥", title:"Warning: Hot Love",
+    text:`Fair warning, birthday girl: the way you look at me sets my whole world on fire. 🔥 Every kiss, every touch, every stolen glance, I want them all. Consider this my promise to make you feel like the most wanted woman in the world. 😏` },
+  { icon:"🌙", title:"Forever",
+    text:`Whatever this new year brings, I want to face it with you. Every sunrise, every late-night talk, every silly moment. I love you more than any words on a screen could say. Happy birthday, my heart. ❤️` }
+];
+
+const POEM = [
+  [ `${HER_NAME}, if the stars could learn your name,`,
+    `they'd bow their light and let you take the sky.`,
+    `I'd still just watch you, never quite the same,`,
+    `since the day you walked in and caught my eye.` ],
+  [ `Your laugh is my favorite kind of morning,`,
+    `soft gold poured over all I've ever known.`,
+    `Your hand finds mine without a warning,`,
+    `and suddenly I'm home, and not alone.` ],
+  [ `I love the fire that lives inside your eyes,`,
+    `the way you kiss like every word is true,`,
+    `the quiet, gentle way you make me rise,`,
+    `and how my whole world softens next to you.` ],
+  [ `So make a wish upon this candlelight,`,
+    `and know I'll spend my life to make it real.`,
+    `Happy birthday, my love, my whole delight,`,
+    `you're everything I never knew I'd feel.` ]
+];
+/* ===================================================== */
+
+const $ = s => document.querySelector(s);
+const cakeBtn = $('#cake'), cakeSvg = $('#cakeSvg'), hint = $('#hint');
+const msgDlg = $('#msg'), poemDlg = $('#poem');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- fill in names ---- */
+document.title = `Happy Birthday ${HER_NAME} 🎂`;
+$('#name').textContent = HER_NAME;
+$('#cakeName').textContent = HER_NAME;
+$('#introHey').textContent = `Hey ${HER_NAME}…`;
+$('#poemTitle').textContent = `For you, ${HER_NAME}`;
+$('#sign').innerHTML = `Happy Birthday, my love.<br>Forever yours, ${FROM_NAME}`;
+
+/* ---- stars ---- */
+for (let i = 0; i < 70; i++) {
+  const s = document.createElement('i');
+  const z = Math.random() * 2.4 + .8;
+  Object.assign(s.style, {
+    left: Math.random() * 100 + '%', top: Math.random() * 100 + '%',
+    width: z + 'px', height: z + 'px',
+    animationDelay: Math.random() * 3 + 's', animationDuration: (2 + Math.random() * 3) + 's'
+  });
+  $('#stars').appendChild(s);
+}
+
+/* ---- confetti (hearts + paper) ---- */
+const cv = $('#confetti'), cx = cv.getContext('2d');
+const COLORS = ['#ff6f91', '#ffcf6b', '#b794f6', '#fff1e6', '#ff9ebc', '#7dd3fc'];
+let parts = [], raf = 0;
+function sizeCanvas() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+  cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+sizeCanvas(); addEventListener('resize', sizeCanvas);
+
+function addParts(n, make) {
+  for (let i = 0; i < n; i++) parts.push(make());
+  if (!raf) raf = requestAnimationFrame(tick);
+}
+function burst(x, y, n = 100) {
+  if (reduceMotion) n = Math.min(n, 25);
+  addParts(n, () => {
+    const a = -Math.PI * (0.08 + Math.random() * 0.84), s = 6 + Math.random() * 10;
+    return { x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, g: .28, rot: Math.random() * 6, vr: (Math.random() - .5) * .3,
+             size: 6 + Math.random() * 7, color: COLORS[(Math.random() * COLORS.length) | 0], heart: Math.random() < .4, life: 0 };
+  });
+}
+function rain(n = 90) {
+  if (reduceMotion) n = 20;
+  addParts(n, () => ({
+    x: Math.random() * innerWidth, y: -20 - Math.random() * 200, vx: (Math.random() - .5) * 1.2, vy: 1.5 + Math.random() * 3,
+    g: .01, rot: Math.random() * 6, vr: (Math.random() - .5) * .1,
+    size: 8 + Math.random() * 8, color: COLORS[(Math.random() * 3) | 0], heart: true, life: 0
+  }));
+}
+function tick() {
+  cx.clearRect(0, 0, innerWidth, innerHeight);
+  parts = parts.filter(p => p.y < innerHeight + 30 && p.life < 420);
+  for (const p of parts) {
+    p.life++; p.vy += p.g; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.fillStyle = p.color;
+    if (p.heart) { cx.font = `${p.size * 1.8}px system-ui, sans-serif`; cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.fillText('♥', 0, 0); }
+    else cx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+    cx.restore();
+  }
+  raf = parts.length ? requestAnimationFrame(tick) : 0;
+  if (!raf) cx.clearRect(0, 0, innerWidth, innerHeight);
+}
+
+/* ---- happy birthday melody (Web Audio, no files needed) ---- */
+const MELODY = [
+  [392,.75],[392,.25],[440,1],[392,1],[523.25,1],[493.88,2],
+  [392,.75],[392,.25],[440,1],[392,1],[587.33,1],[523.25,2],
+  [392,.75],[392,.25],[783.99,1],[659.25,1],[523.25,1],[493.88,1],[440,1],
+  [698.46,.75],[698.46,.25],[659.25,1],[523.25,1],[587.33,1],[523.25,2]
+];
+let audioCtx = null, muted = false, melodyTimer = 0;
+function stopMelody() {
+  clearTimeout(melodyTimer);
+  if (audioCtx) { audioCtx.close().catch(() => {}); audioCtx = null; }
+}
+function playMelody() {
+  if (muted) return;
+  stopMelody();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  audioCtx = new AC();
+  const beat = .42; let t = audioCtx.currentTime + .05;
+  for (const [f, b] of MELODY) {
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain(), d = b * beat;
+    o.type = 'triangle'; o.frequency.value = f;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(.2, t + .03);
+    g.gain.exponentialRampToValueAtTime(.001, t + d * .95);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(t); o.stop(t + d);
+    t += d;
+  }
+  melodyTimer = setTimeout(stopMelody, (t - audioCtx.currentTime + .5) * 1000);
+}
+$('#mute').addEventListener('click', e => {
+  muted = !muted;
+  e.currentTarget.textContent = muted ? '🔇' : '🔊';
+  e.currentTarget.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+  if (muted) stopMelody();
+});
+
+/* ---- progress ---- */
+const opened = new Set();
+let poemShown = false;
+const heartsEl = $('#hearts');
+SURPRISES.forEach(() => { const s = document.createElement('span'); s.textContent = '♥'; heartsEl.appendChild(s); });
+function updateHint() {
+  const n = opened.size, total = SURPRISES.length;
+  hint.textContent = n === 0 ? `Blow out the candles, then find the ${total} hidden surprises 💝`
+                   : n < total ? `${n} of ${total} surprises found`
+                   : `You found them all 💖`;
+  [...heartsEl.children].forEach((h, i) => h.classList.toggle('on', i < n));
+}
+
+/* ---- surprise items ---- */
+SURPRISES.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'item';
+  b.style.setProperty('--d', (i * .4) + 's');
+  b.setAttribute('aria-label', `Open surprise ${i + 1} of ${SURPRISES.length}`);
+  b.innerHTML = `<span aria-hidden="true">${s.icon}</span>`;
+  b.addEventListener('click', () => {
+    $('#mIcon').textContent = s.icon;
+    $('#mTitle').textContent = s.title;
+    $('#mText').textContent = s.text;
+    msgDlg.showModal();
+    const r = b.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 35);
+    opened.add(i); b.classList.add('done'); updateHint();
+  });
+  (i < 3 ? $('#rowTop') : $('#rowBottom')).appendChild(b);
+});
+
+msgDlg.addEventListener('close', () => {
+  if (opened.size === SURPRISES.length && !poemShown) {
+    poemShown = true;
+    setTimeout(showPoem, 650);
+  }
+});
+
+/* ---- poem ---- */
+const poemBody = $('#poemBody');
+let li = 0;
+POEM.forEach(st => {
+  const d = document.createElement('div'); d.className = 'stanza';
+  st.forEach(line => {
+    const s = document.createElement('span'); s.className = 'line'; s.textContent = line;
+    s.style.setProperty('--d', (.4 + li * .75) + 's'); li++;
+    d.appendChild(s);
+  });
+  poemBody.appendChild(d);
+});
+$('#sign').style.setProperty('--d', (.8 + li * .75) + 's');
+$('#poemClose').style.setProperty('--d', (1.6 + li * .75) + 's');
+
+function showPoem() {
+  poemDlg.showModal();
+  poemDlg.scrollTop = 0;
+  rain(90);
+  $('#poemBtn').hidden = false;
+}
+$('#poemBtn').addEventListener('click', showPoem);
+
+/* close dialogs by tapping the dark area */
+[msgDlg, poemDlg].forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+
+/* ---- cake: blow out candles, make a wish ---- */
+let relight = 0;
+cakeBtn.addEventListener('click', () => {
+  const r = cakeBtn.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height * .3, 110);
+  cakeSvg.classList.add('out');
+  hint.textContent = `Make a wish, ${HER_NAME} ✨`;
+  if (!audioCtx) playMelody();
+  clearTimeout(relight);
+  relight = setTimeout(() => { cakeSvg.classList.remove('out'); updateHint(); }, 3800);
+});
+
+/* ---- intro ---- */
+$('#openBtn').addEventListener('click', () => {
+  const intro = $('#intro');
+  intro.classList.add('gone');
+  $('#stage').inert = false;
+  setTimeout(() => { intro.hidden = true; }, 850);
+  const r = cakeBtn.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height * .3, 150);
+  playMelody();
+});
+
+updateHint();
+</script>
+</body>
+</html>
