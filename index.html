@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Happy Birthday</title>
+<title>Feliz Cumpleaños</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,15 +149,15 @@
 
 <div id="stars" aria-hidden="true"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
-<button class="mute" id="mute" aria-label="Turn sound off" title="Sound">🔊</button>
+<button class="mute" id="mute" aria-label="Silenciar sonido" title="Sonido">🔊</button>
 
 <!-- Intro -->
 <section class="intro" id="intro">
   <div class="big-heart" aria-hidden="true">♥</div>
-  <h2 id="introHey">Hey…</h2>
-  <p>I made something special for you.</p>
-  <button class="btn" id="openBtn">Open your surprise</button>
-  <small>Turn your sound on 🔊</small>
+  <h2 id="introHey">Hola…</h2>
+  <p>Hice algo muy especial para ti.</p>
+  <button class="btn" id="openBtn">Abre tu sorpresa</button>
+  <small>Sube el volumen 🔊</small>
 </section>
 
 <main class="stage" id="stage" inert>
@@ -174,11 +174,11 @@
     <polygon points="346,17.7 374,17.7 360,47.7" fill="#ff6f91"/>
   </svg>
 
-  <h1><span class="hb">Happy Birthday</span><span class="nm" id="name">Ryoko</span></h1>
+  <h1><span class="hb">Feliz Cumpleaños</span><span class="nm" id="name">Ryoko</span></h1>
 
   <div class="row" id="rowTop"></div>
 
-  <button class="cake" id="cake" aria-label="Tap the cake to blow out the candles">
+  <button class="cake" id="cake" aria-label="Toca el pastel para apagar las velas">
     <svg id="cakeSvg" viewBox="0 0 400 440" aria-hidden="true">
       <defs>
         <radialGradient id="glowG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>
@@ -201,7 +201,7 @@
         <circle cx="64" cy="326" r="13"/><circle cx="100" cy="326" r="13"/><circle cx="136" cy="326" r="13"/><circle cx="172" cy="326" r="13"/>
         <circle cx="208" cy="326" r="13"/><circle cx="244" cy="326" r="13"/><circle cx="280" cy="326" r="13"/><circle cx="316" cy="326" r="13"/><circle cx="344" cy="324" r="11"/>
       </g>
-      <text x="200" y="376" text-anchor="middle" class="cake-script" font-size="38" fill="#c2185b">Happy Birthday</text>
+      <text x="200" y="376" text-anchor="middle" class="cake-script" font-size="36" fill="#c2185b">Feliz Cumpleaños</text>
       <line x1="58" y1="389" x2="342" y2="389" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 22"/>
 
       <!-- middle tier frosting -->
@@ -261,7 +261,7 @@
 
   <p class="hint" id="hint" aria-live="polite"></p>
   <div class="hearts" id="hearts" aria-hidden="true"></div>
-  <button class="link-btn" id="poemBtn" hidden>Read your poem again</button>
+  <button class="link-btn" id="poemBtn" hidden>Vuelve a leer tu poema</button>
 </main>
 
 <!-- One surprise message -->
@@ -270,7 +270,7 @@
     <div class="m-icon" id="mIcon" aria-hidden="true"></div>
     <h2 class="m-title" id="mTitle"></h2>
     <p class="m-text" id="mText"></p>
-    <form method="dialog"><button class="btn">Close</button></form>
+    <form method="dialog"><button class="btn">Cerrar</button></form>
   </div>
 </dialog>
 
@@ -280,7 +280,7 @@
     <h2 id="poemTitle"></h2>
     <div id="poemBody"></div>
     <p class="sign" id="sign"></p>
-    <form method="dialog"><button class="btn" id="poemClose">Back to the cake</button></form>
+    <form method="dialog"><button class="btn" id="poemClose">Volver al pastel</button></form>
   </div>
 </dialog>
 
@@ -292,37 +292,37 @@ const HER_NAME  = "Ryoko";
 const FROM_NAME = "MoNSTeR";
 
 const SURPRISES = [
-  { icon:"🎈", title:"Happy Birthday, my love!",
-    text:`Today the whole world celebrates the day you were born, and I get to celebrate that you're mine. You make every single day brighter, and today you're the brightest thing in the sky.` },
-  { icon:"🎁", title:"The Best Gift",
-    text:`They say the best gifts come when you least expect them. Then you walked into my life, and I've been unwrapping new reasons to adore you ever since.` },
-  { icon:"💌", title:"Little Things",
-    text:`I love the way you laugh, the way you look at me when you think I'm not watching, and the way ordinary days turn into my favorite memories when you're in them.` },
-  { icon:"🌹", title:"Gorgeous",
-    text:`You're beautiful, ${HER_NAME}. Not only the way you look, but the way you love, the way you care, and the way you light up a room without even trying. I'm still a little dazzled every time I see you.` },
-  { icon:"🔥", title:"Warning: Hot Love",
-    text:`Fair warning, birthday girl: the way you look at me sets my whole world on fire. 🔥 Every kiss, every touch, every stolen glance, I want them all. Consider this my promise to make you feel like the most wanted woman in the world. 😏` },
-  { icon:"🌙", title:"Forever",
-    text:`Whatever this new year brings, I want to face it with you. Every sunrise, every late-night talk, every silly moment. I love you more than any words on a screen could say. Happy birthday, my heart. ❤️` }
+  { icon:"🎈", title:"¡Feliz cumpleaños, mi amor!",
+    text:`Hoy el mundo entero celebra el día en que naciste, y yo celebro que eres mía. Haces que cada día sea más brillante, y hoy eres lo más brillante del cielo.` },
+  { icon:"🎁", title:"El mejor regalo",
+    text:`Dicen que los mejores regalos llegan cuando menos los esperas. Entonces llegaste a mi vida, y desde entonces no he dejado de descubrir nuevas razones para adorarte.` },
+  { icon:"💌", title:"Pequeñas cosas",
+    text:`Amo tu risa, la forma en que me miras cuando crees que no me doy cuenta, y cómo los días normales se convierten en mis recuerdos favoritos cuando tú estás en ellos.` },
+  { icon:"🌹", title:"Preciosa",
+    text:`Eres hermosa, ${HER_NAME}. No solo por fuera, sino por cómo amas, cómo cuidas y cómo iluminas cualquier lugar sin siquiera intentarlo. Todavía me deslumbras cada vez que te veo.` },
+  { icon:"🔥", title:"Advertencia: amor ardiente",
+    text:`Te aviso, cumpleañera: la forma en que me miras incendia todo mi mundo. 🔥 Cada beso, cada caricia, cada mirada robada, los quiero todos. Te prometo que te haré sentir la mujer más deseada del mundo. 😏` },
+  { icon:"🌙", title:"Para siempre",
+    text:`Sea lo que sea que traiga este nuevo año, quiero vivirlo contigo. Cada amanecer, cada charla de madrugada, cada momento tonto. Te amo más de lo que cualquier palabra en una pantalla podría decir. Feliz cumpleaños, mi corazón. ❤️` }
 ];
 
 const POEM = [
-  [ `${HER_NAME}, if the stars could learn your name,`,
-    `they'd bow their light and let you take the sky.`,
-    `I'd still just watch you, never quite the same,`,
-    `since the day you walked in and caught my eye.` ],
-  [ `Your laugh is my favorite kind of morning,`,
-    `soft gold poured over all I've ever known.`,
-    `Your hand finds mine without a warning,`,
-    `and suddenly I'm home, and not alone.` ],
-  [ `I love the fire that lives inside your eyes,`,
-    `the way you kiss like every word is true,`,
-    `the quiet, gentle way you make me rise,`,
-    `and how my whole world softens next to you.` ],
-  [ `So make a wish upon this candlelight,`,
-    `and know I'll spend my life to make it real.`,
-    `Happy birthday, my love, my whole delight,`,
-    `you're everything I never knew I'd feel.` ]
+  [ `${HER_NAME}, si las estrellas te vieran pasar,`,
+    `te pedirían prestada tu luz al cielo;`,
+    `yo solo sé que no puedo dejar de mirar,`,
+    `y desde que llegaste, vivo en pleno vuelo.` ],
+  [ `Tu risa es la mañana que ilumina mi día,`,
+    `un sol dorado que me abraza donde estoy;`,
+    `tu mano busca la mía y se va la melancolía,`,
+    `y en tu abrazo descubro por fin quién soy.` ],
+  [ `Amo el fuego que vive en tu mirada,`,
+    `tu forma de besar como quien no miente,`,
+    `tu manera de dejarme sin palabras, sin nada,`,
+    `y cómo el mundo se vuelve más cálido, más presente.` ],
+  [ `Pide un deseo frente a la luz de las velas,`,
+    `que yo pasaré la vida haciéndolo realidad;`,
+    `feliz cumpleaños, mi amor, mi luna, mi estrella,`,
+    `contigo aprendí lo que es la felicidad.` ]
 ];
 /* ===================================================== */
 
@@ -332,12 +332,12 @@ const msgDlg = $('#msg'), poemDlg = $('#poem');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---- fill in names ---- */
-document.title = `Happy Birthday ${HER_NAME} 🎂`;
+document.title = `Feliz Cumpleaños ${HER_NAME} 🎂`;
 $('#name').textContent = HER_NAME;
 $('#cakeName').textContent = HER_NAME;
-$('#introHey').textContent = `Hey ${HER_NAME}…`;
-$('#poemTitle').textContent = `For you, ${HER_NAME}`;
-$('#sign').innerHTML = `Happy Birthday, my love.<br>Forever yours, ${FROM_NAME}`;
+$('#introHey').textContent = `Hola ${HER_NAME}…`;
+$('#poemTitle').textContent = `Para ti, ${HER_NAME}`;
+$('#sign').innerHTML = `Feliz cumpleaños, mi amor.<br>Tuyo para siempre, ${FROM_NAME}`;
 
 /* ---- stars ---- */
 for (let i = 0; i < 70; i++) {
@@ -430,7 +430,7 @@ function playMelody() {
 $('#mute').addEventListener('click', e => {
   muted = !muted;
   e.currentTarget.textContent = muted ? '🔇' : '🔊';
-  e.currentTarget.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+  e.currentTarget.setAttribute('aria-label', muted ? 'Activar sonido' : 'Silenciar sonido');
   if (muted) stopMelody();
 });
 
@@ -441,9 +441,9 @@ const heartsEl = $('#hearts');
 SURPRISES.forEach(() => { const s = document.createElement('span'); s.textContent = '♥'; heartsEl.appendChild(s); });
 function updateHint() {
   const n = opened.size, total = SURPRISES.length;
-  hint.textContent = n === 0 ? `Blow out the candles, then find the ${total} hidden surprises 💝`
-                   : n < total ? `${n} of ${total} surprises found`
-                   : `You found them all 💖`;
+  hint.textContent = n === 0 ? `Apaga las velas y encuentra las ${total} sorpresas escondidas 💝`
+                   : n < total ? `${n} de ${total} sorpresas encontradas`
+                   : `¡Las encontraste todas! 💖`;
   [...heartsEl.children].forEach((h, i) => h.classList.toggle('on', i < n));
 }
 
@@ -452,7 +452,7 @@ SURPRISES.forEach((s, i) => {
   const b = document.createElement('button');
   b.className = 'item';
   b.style.setProperty('--d', (i * .4) + 's');
-  b.setAttribute('aria-label', `Open surprise ${i + 1} of ${SURPRISES.length}`);
+  b.setAttribute('aria-label', `Abrir sorpresa ${i + 1} de ${SURPRISES.length}`);
   b.innerHTML = `<span aria-hidden="true">${s.icon}</span>`;
   b.addEventListener('click', () => {
     $('#mIcon').textContent = s.icon;
@@ -505,7 +505,7 @@ cakeBtn.addEventListener('click', () => {
   const r = cakeBtn.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height * .3, 110);
   cakeSvg.classList.add('out');
-  hint.textContent = `Make a wish, ${HER_NAME} ✨`;
+  hint.textContent = `Pide un deseo, ${HER_NAME} ✨`;
   if (!audioCtx) playMelody();
   clearTimeout(relight);
   relight = setTimeout(() => { cakeSvg.classList.remove('out'); updateHint(); }, 3800);
